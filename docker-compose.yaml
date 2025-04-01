@@ -3,22 +3,22 @@ networks:
 
 volumes:
   postgis_db:
-  geoserver_db:
 
 services:
-  geoserver:
-    image: docker.osgeo.org/geoserver:2.27.x
+  tomcat:
+    image: tomcat:9-jdk11
     networks:
       - backend
     ports:
       - 8080:8080
     volumes:
-      - geoserver_db:/opt/geoserver_data
+      - ./tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - ./tomcat/webapps:/usr/local/tomcat/webapps
 
   postgis:
     environment:
-      POSTGRES_PASSWORD: pass
       POSTGRES_DB: db
+      POSTGRES_PASSWORD: pass
     image: postgis/postgis:17-3.5
     networks:
       - backend
@@ -26,13 +26,3 @@ services:
       - 5432:5432
     volumes:
       - postgis_db:/var/lib/postgresql/data
-
-  pgadmin:
-    environment:
-      PGADMIN_DEFAULT_EMAIL: user@domain.com
-      PGADMIN_DEFAULT_PASSWORD: pass
-    image: dpage/pgadmin4
-    networks:
-      - backend
-    ports:
-      - 5000:80
