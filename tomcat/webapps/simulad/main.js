@@ -28,7 +28,7 @@ var overlays = new LayerGroup({
       title: "test",
       source: new SourceImageWMS({
         url: "http://localhost:8080/geoserver/wms",
-        params: { LAYERS: "aam:buildings" },
+        params: { LAYERS: "AAM:buildings" },
         ratio: 1,
         serverType: "geoserver",
       }),
